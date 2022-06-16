@@ -6,6 +6,10 @@ module.exports = {
                 primaryKey: true,
                 allowNull: false
             },
+            name: {
+                type: Sequelize.DataTypes.STRING,
+                allowNull: false
+            },
             isBonus: {
                 type: Sequelize.DataTypes.TINYINT,
                 defaultValue: 1,
