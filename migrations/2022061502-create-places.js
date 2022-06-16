@@ -12,20 +12,20 @@ module.exports = {
                 allowNull: false
             },
             createdAt: {
-                type: "TIMESTAMP",
+                type: Sequelize.DataTypes.DATE,
                 defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
                 allowNull: false,
             },
             updatedAt: {
-                type: "TIMESTAMP",
+                type: Sequelize.DataTypes.DATE,
                 defaultValue: Sequelize.literal(
                     "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
                 ),
                 allowNull: false,
             }
         }, {
-            charset: 'utf8',
-            collate: 'utf8_general_ci',
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_general_ci',
         });
     },
     down: (queryInterface, Sequelize) => {
