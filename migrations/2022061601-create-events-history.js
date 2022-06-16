@@ -1,11 +1,15 @@
-const HAS_BONUS = 0;
+const ACTINOS = ['ADD', 'MOD', 'DELETE'];
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('reviews', {
-            reviewId: {
+        return queryInterface.createTable('events_history', {
+            eventHistoryId: {
                 type: Sequelize.DataTypes.UUID,
                 primaryKey: true,
+                allowNull: false
+            },
+            reviewId: {
+                type: Sequelize.DataTypes.UUID,
                 allowNull: false
             },
             userId: {
@@ -16,13 +20,9 @@ module.exports = {
                 type: Sequelize.DataTypes.UUID,
                 allowNull: false
             },
-            hasPlaceBonus: {
-                type: Sequelize.DataTypes.TINYINT,
-                defaultValue: HAS_BONUS,
-                allowNull: false
-            },
-            content: {
-                type: Sequelize.DataTypes.STRING,
+            action: {
+                type: Sequelize.DataTypes.ENUM,
+                values: ACTINOS,
                 allowNull: true
             },
             createdAt: {
@@ -40,9 +40,12 @@ module.exports = {
         }, {
             charset: 'utf8',
             collate: 'utf8_general_ci',
+            indexes: [{
+                fields: ['placeId', 'action']
+            }]
         });
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('reviews');
+        return queryInterface.dropTable('events_history');
     }
 };
