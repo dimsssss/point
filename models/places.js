@@ -3,7 +3,7 @@ const { format } = require('date-fns');
 
 module.exports = (sequelize, DataTypes) => {
     const places = sequelize.define('places', {
-        userId: {
+        placeId: {
             type: DataTypes.UUID,
             primaryKey: true,
             allowNull: false
