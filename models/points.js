@@ -74,6 +74,18 @@ module.exports = (sequelize, DataTypes) => {
         return result.get({plain:true});
     }
 
+    points.findDuplicatedPoint = async (data, transaction) => {
+        const result = await points.findOne({where:{userId: data.userId, placeId: data.placeId}, transaction}).catch((err) => {
+            throw err;
+        });
+
+        if (result === null) {
+            return null;
+        }
+
+        return result.get({plain:true});
+    }
+
     points.addUserPoint = async (point, t) => {
         const result = await points.create(point, {transaction: t}).catch((err) => {throw err});
 
