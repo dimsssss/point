@@ -42,6 +42,7 @@ module.exports = {
             collate: 'utf8mb4_general_ci'
         }).then(() => {
             queryInterface.addIndex('points', ['placeId', 'hasBonus']);
+            queryInterface.addIndex('points', ['userId']);
         })
     },
     down: (queryInterface, Sequelize) => {

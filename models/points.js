@@ -42,6 +42,15 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true,
     });
 
+    points.findTotalPointByUserId = async (userId, t) => {
+        const result = await points
+            .findAll({where:{userId}, attributes: ['userId', [sequelize.fn('sum', sequelize.col('point')), 'totalPoint']], raw: true})
+            .catch((err) => {
+                throw err;
+            });
+        return result.pop();
+    }
+
     points.findPointThatReceivedPlaceBonus = async (placeId, t) => {
         const result = await points.findOne({where: {placeId, hasBonus: true}, transaction: t}).catch((err) => {
             throw err;
@@ -55,6 +64,18 @@ module.exports = (sequelize, DataTypes) => {
 
     points.findPointByReviewId = async (reviewId, transaction) => {
         const result = await points.findOne({where:{reviewId}, transaction}).catch((err) => {
+            throw err;
+        });
+
+        if (result === null) {
+            return null;
+        }
+
+        return result.get({plain:true});
+    }
+
+    points.findDuplicatedPoint = async (data, transaction) => {
+        const result = await points.findOne({where:{userId: data.userId, placeId: data.placeId}, transaction}).catch((err) => {
             throw err;
         });
 
