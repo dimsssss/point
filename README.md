@@ -12,14 +12,17 @@
     <a href="">
         <img alt="npm" src="https://img.shields.io/node/v-lts/npm?label=npm&logo=npm">
     </a>
-    <a href="">
+    <a href="https://expressjs.com/">
         <img alt="express" src="https://img.shields.io/node/v-lts/express?label=express&logo=express">
     </a>
-    <a href="">
+    <a href="https://jestjs.io/">
         <img alt="jest" src="https://img.shields.io/node/v-lts/express?label=jest&logo=jest">
     </a>
-    <a href="">
+    <a href="https://sequelize.org/">
         <img alt="sequelize" src="https://img.shields.io/node/v-lts/sequelize?label=sequelize&logo=sequelize">
+    </a>
+    <a href="https://app.travis-ci.com/github/dimsssss/point">
+        <img alt="travis" src="https://app.travis-ci.com/dimsssss/point.svg?branch=main">
     </a>
 </p>
 
