@@ -13,6 +13,12 @@ const getUserPoint = async (db, data) => {
                 throw new notFoundPointException();
             }
 
+            if (result.userId === null) {
+                result.userId = userId;
+            }
+            if (result.totalPoint === null) {
+                result.totalPoint = 0;
+            }
             return result;
         });
     } catch (e) {
