@@ -26,13 +26,13 @@ describe('points endpoint 테스트입니다', function () {
         await db.pointsHistory.destroy({where: {}});
     })
 
-    it('사용자의 포인트가 정보가 없을 시 null 값 반환', async function () {
+    it('사용자의 포인트 정보가 없을 시 기본값 반환', async function () {
         const userId = uuid();
         const response = await request(app).get(`/v1/points/${userId}`);
 
         expect(response.status).toEqual(200);
-        expect(response.body.userId).toEqual(null);
-        expect(response.body.totalPoint).toEqual(null);
+        expect(response.body.userId).toEqual(userId);
+        expect(response.body.totalPoint).toEqual(0);
     });
 
     it('사용자의 포인트를 정보를 조회한다(userId, totalPoint)', async function () {
