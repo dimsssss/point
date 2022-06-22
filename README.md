@@ -49,11 +49,8 @@ npm install
 npx sequelize-cli db:migrate
 ```
 
-## 🖼 ERD
-coming soon
-
 ## 🌐 API Document
-coming soon
+[postman](https://documenter.getpostman.com/view/6055091/UzBpKRK1)
 
 ## 🧾 실행
 ```shell
