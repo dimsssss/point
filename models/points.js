@@ -111,7 +111,6 @@ module.exports = (sequelize, DataTypes) => {
         const pointId = data.pointId || uuidv4();
         const {userId, placeId, reviewId} = data;
         const createdAt = new Date().toISOString();
-        console.log(createdAt);
         const updatedAt = createdAt;
         return {
             pointId,

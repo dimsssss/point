@@ -70,7 +70,6 @@ describe('points 통합테스트입니다.', () => {
         await modifyPointByEditingReview(db, fakeData);
 
         const modifiedPoint = await db.points.findOne({where: {userId: fakeData.userId, placeId: fakeData.placeId, reviewId: fakeData.reviewId}, raw: true});
-        console.log(modifiedPoint)
         expect(prevPoint.point).not.toEqual(modifiedPoint.point);
     });
 
