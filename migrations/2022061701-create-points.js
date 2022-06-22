@@ -43,6 +43,7 @@ module.exports = {
         }).then(() => {
             queryInterface.addIndex('points', ['placeId', 'hasBonus']);
             queryInterface.addIndex('points', ['userId']);
+            queryInterface.addIndex('points', ['reviewId']);
         })
     },
     down: (queryInterface, Sequelize) => {
