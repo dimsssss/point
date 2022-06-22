@@ -8,6 +8,11 @@ const getUserPoint = async (db, data) => {
             const {userId} = data;
 
             const result = await points.findTotalPointByUserId(userId, t);
+
+            if (result === null) {
+                throw new notFoundPointException();
+            }
+
             return result;
         });
     } catch (e) {
@@ -83,7 +88,7 @@ const deletePointForDeleteReview = async (db, data) => {
 
             const newHistory = pointsHistory.mapFrom(data, reviewPoint.point);
             await pointsHistory.addUserPointHistory(newHistory, t);
-            return await points.deletePoint(data, t);
+            await points.deletePoint(data, t);
         })
     } catch (e) {
         throw e;
