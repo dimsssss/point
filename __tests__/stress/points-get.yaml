@@ -1,0 +1,12 @@
+config:
+  target: "http://localhost:3000"
+  environments:
+    local:
+      target: "http://127.0.0.1:3000"
+      phases:
+        - duration: 10
+          arrivalRate: 500
+scenarios:
+  - flow:
+      - get:
+          url: "/v1/points/af75b8a6-fede-4fb7-9fe0-0f2d7c7259ac"
