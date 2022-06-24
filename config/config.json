@@ -6,7 +6,11 @@
     "host": "127.0.0.1",
     "port": "6603",
     "dialect": "mysql",
-    "timezone": "+09:00"
+    "timezone": "+09:00",
+    "pool": {
+      "max": 5,
+      "min": 5
+    }
   },
   "test": {
     "username": "root",
