@@ -17,5 +17,9 @@ install:
   - npm install
   - npx sequelize-cli db:migrate
 
-after_success:
-  - npm run test
+jobs:
+  include:
+    - stage: test
+    - script: npm run unittest
+    - script: npm run intergrationtest
+    - script: npm run endpointtest
