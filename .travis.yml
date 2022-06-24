@@ -19,7 +19,6 @@ install:
 
 jobs:
   include:
-    - stage: test
     - script: npm run unittest
     - script: npm run intergrationtest
     - script: npm run endpointtest
