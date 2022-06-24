@@ -1,0 +1,17 @@
+# CircleCI configuration file
+
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: mysql/latest
+    working_directory: ./__tests__
+    parallelism: 3
+    steps:
+      - run: docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:latest
+      - run: npm install
+      - run: npx sequelize-cli db:migrate
+      - run:
+          command: |
+            circleci tests glob "**/__tests__/unit/*.js | circleci tests glob "**/__tests__/intergration/*.js | circleci tests glob "**/__tests__/endpoint/*.js
