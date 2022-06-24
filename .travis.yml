@@ -11,13 +11,14 @@ services:
 
 before_install:
   - docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:latest
-  - sleep 15
+  - sleep 10
 
 install:
   - npm install
   - npx sequelize-cli db:migrate
 
 jobs:
+  fast_finish: true
   include:
     - script: npm run unittest
     - script: npm run intergrationtest
