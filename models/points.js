@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
 
     points.findTotalPointByUserId = async (userId, t) => {
         const result = await points
-            .findAll({where:{userId}, attributes: ['userId', [sequelize.fn('sum', sequelize.col('point')), 'totalPoint']], raw: true})
+            .findAll({where:{userId}, attributes: ['userId', [sequelize.fn('sum', sequelize.col('point')), 'totalPoint']], transaction: t, raw: true})
             .catch((err) => {
                 throw err;
             });
