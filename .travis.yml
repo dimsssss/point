@@ -9,11 +9,9 @@ branches:
 services:
   - docker
 
-before_install:
+install:
   - docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:latest
   - sleep 10
-
-install:
   - npm install
   - npx sequelize-cli db:migrate
 
