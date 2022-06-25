@@ -15,17 +15,10 @@ jobs:
       - run: npm install
       - run: npx sequelize-cli db:migrate
   test:
-    executor: true,
+    machine: true
     parallelism: 4
     steps:
       - run:
         command: |
           circleci tests glob "**/__tests__/unit/*.js" "**/__tests__/intergration/*.js" "**/__tests__/endpoint/*.js"
           | circleci tests split | while read file; do (npx jest $file &); done
-
-workflows:
-  version: 2.1
-  build_and_test:
-    jobs:
-      - build
-      - test
