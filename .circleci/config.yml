@@ -10,11 +10,11 @@ jobs:
       - checkout
       - run: docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:8.0
       - node/install:
-          node-version: '16.14'
+          node-version: '16.15'
       - run: node --version
       - run: npm install
       - run: npx sequelize-cli db:migrate
       - run:
           command:
             circleci tests glob "**/__tests__/unit/*.js" "**/__tests__/intergration/*.js" "**/__tests__/endpoint/*.js"
-            | circleci tests split | while read file; do (npx jest file); done
+            | circleci tests split | while read file echo $file; do (npx jest file); done
