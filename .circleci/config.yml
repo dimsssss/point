@@ -1,17 +1,21 @@
 # CircleCI configuration file
 
 version: 2.1
-
+orbs:
+  node: circleci/node@5.0.2
 jobs:
   build:
-    docker:
-      - image: mysql/latest
-    working_directory: ./__tests__
-    parallelism: 3
+    machine: true
+    parallelism: 4
     steps:
-      - run: docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:latest
+      - checkout
+      - run: docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:8.0
+      - node/install:
+          node-version: '16.15'
+      - run: node --version
       - run: npm install
       - run: npx sequelize-cli db:migrate
       - run:
           command: |
-            circleci tests glob "**/__tests__/unit/*.js | circleci tests glob "**/__tests__/intergration/*.js | circleci tests glob "**/__tests__/endpoint/*.js
+            TEST=$(circleci tests glob "**/__tests__/unit/*.js" "**/__tests__/intergration/*.js" "**/__tests__/endpoint/*.js" | circleci tests split --split-by=timings)
+            npx jest $TEST
