@@ -5,11 +5,12 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: mysql/latest
+      - image: cimg/mysql:8.0
     working_directory: ./__tests__
     parallelism: 3
     steps:
       - run: docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:latest
+      - run: sleep 5
       - run: npm install
       - run: npx sequelize-cli db:migrate
       - run:
