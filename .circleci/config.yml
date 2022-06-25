@@ -9,7 +9,11 @@ jobs:
     working_directory: ./__tests__
     parallelism: 3
     steps:
-      - run: docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:latest
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+            - run: | docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:latest
+
       - run: sleep 5
       - run: npm install
       - run: npx sequelize-cli db:migrate
