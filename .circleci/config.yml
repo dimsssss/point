@@ -6,7 +6,6 @@ orbs:
 jobs:
   build:
     machine: true
-    working_directory: ./__tests__
     parallelism: 3
     steps:
       - run: docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:8.0
