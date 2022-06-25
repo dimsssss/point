@@ -18,6 +18,7 @@ jobs:
     machine: true
     parallelism: 4
     steps:
+      - checkout
       - run:
         command: |
           circleci tests glob "**/__tests__/unit/*.js" "**/__tests__/intergration/*.js" "**/__tests__/endpoint/*.js"
