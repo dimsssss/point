@@ -18,5 +18,4 @@ jobs:
       - run:
           command:
             circleci tests glob "**/__tests__/unit/*.js" "**/__tests__/intergration/*.js" "**/__tests__/endpoint/*.js"
-            | circleci tests split > /tmp/tests-to-run 
-            bundle exec rspec $(cat /tmp/tests-to-run)
+            | circleci tests split | while read file; do (jest file); done
