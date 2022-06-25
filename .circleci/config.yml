@@ -6,7 +6,6 @@ orbs:
 jobs:
   build:
     machine: true
-    parallelism: 3
     steps:
       - checkout
       - run: docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:8.0
@@ -19,4 +18,5 @@ jobs:
       - run:
           command:
             circleci tests glob "**/__tests__/unit/*.js" "**/__tests__/intergration/*.js" "**/__tests__/endpoint/*.js"
-            | circleci tests split --split-by=timings
+            | circleci tests split > /tmp/tests-to-run 
+            bundle exec rspec $(cat /tmp/tests-to-run)
