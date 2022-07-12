@@ -9,7 +9,7 @@ jobs:
     machine: true
     parallelism: 4
     steps:
-      - git-shallow-clone/checkout
+      - git-shallow-clone/checkout 
       - restore_cache:
           keys: 
             - v1-dependency-{{ checksum "package-lock.json" }}
