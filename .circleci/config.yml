@@ -13,6 +13,7 @@ jobs:
       - restore_cache:
           keys: 
             - v1-dependency-{{ checksum "package-lock.json" }}
+            - v1-dependency-
       - run: docker run --name=point -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=point -p 6603:3306 -d mysql:8.0
       - node/install:
           node-version: '16.15'
