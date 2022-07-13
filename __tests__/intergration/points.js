@@ -1,4 +1,4 @@
-const db = require('../../models/index');
+const db = require('../../models/initializer')();
 const {v4:uuid} = require('uuid');
 const {addNewPointForWritingReview, modifyPointByEditingReview, deletePointForDeleteReview} = require('../../services/points');
 
