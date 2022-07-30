@@ -2,7 +2,7 @@ const {validationResult} = require("express-validator");
 const {StatusCodes} = require("http-status-codes");
 const {getUserPoint} = require('../services/points');
 
-const lookUpPoint = async (req, res, next) => {
+const lookUpPoint = async (req, res) => {
     const result = validationResult(req);
     const hasErrors = !result.isEmpty();
 
@@ -12,9 +12,12 @@ const lookUpPoint = async (req, res, next) => {
     }
 
     try {
-        const db = req.app.get('db');
-        const param = req.params;
-        const result = await getUserPoint(db, param);
+        const points = req.app.get('db').points
+        const userId = req.params.userId
+        const transaction = req.app.get('db').sequelize.transaction
+        
+        const result = await getUserPoint(transaction, userId, points);
+        
         return res.status(StatusCodes.OK).send(result);
     } catch (e) {
         console.log(e);

@@ -124,5 +124,14 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
 
+    points.init = (userId) => {
+        if (points.userId === null) {
+            points.userId = userId;
+        }
+        if (points.totalPoint === null) {
+            points.totalPoint = 0;
+        }
+    }
+
     return points;
 }

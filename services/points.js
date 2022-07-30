@@ -1,25 +1,19 @@
 const {calculateReviewPoints, isFirstReview} = require('../domain/points');
 const {duplicatedPointException, notFoundPointException} = require('../exceptions/index');
 
-const getUserPoint = async (db, data) => {
+
+const getUserPoint = async (transaction, userId, points) => {
     try {
-        return await db.sequelize.transaction(async (t) => {
-            const points = db.points;
-            const {userId} = data;
+        return await transaction(async (t) => {
+            const userPoint = await points.findTotalPointByUserId(userId, t);
 
-            const result = await points.findTotalPointByUserId(userId, t);
-
-            if (result === null) {
+            if (userPoint === null) {
                 throw new notFoundPointException();
             }
-
-            if (result.userId === null) {
-                result.userId = userId;
-            }
-            if (result.totalPoint === null) {
-                result.totalPoint = 0;
-            }
-            return result;
+            
+            userPoint.init(userId)
+            
+            return userPoint;
         });
     } catch (e) {
         throw e;
@@ -65,10 +59,13 @@ const modifyPointByEditingReview = async (db, data) => {
                 throw new notFoundPointException();
             }
             // 3. 포인트 계산
+            // 문제점 : 외부 객체의 값을 직접 수정
             const calculatedPoint = calculateReviewPoints(data, !reviewPoint.hasBonus);
             // 4. 계산한 포인트와 저장된 포인트 비교
+            // 문제점 : 외부 객체의 값을 직접 비교 
             if (calculatedPoint !== reviewPoint.point) {
                 // 5. 포인트 비교시 차이가 있을 때 point_history 저장, 수정된 review point 저장
+                // 문제점 : 외부 객체의 값을 직접 비교
                 const newPoint = points.mapFrom(reviewPoint, calculatedPoint, reviewPoint.hasBonus);
                 const newHistory = pointsHistory.mapFrom(data, calculatedPoint)
                 await pointsHistory.addUserPointHistory(newHistory, t);
@@ -84,14 +81,16 @@ const deletePointForDeleteReview = async (db, data) => {
     try {
         return await db.sequelize.transaction(async (t) => {
             // 1. 삭제하려는 review point 조회
+            // 문제점 : 외부 객체의 값을 직접 비교
             const points = db.points;
+            // 문제점 : 외부 객체의 값을 직접 비교
             const pointsHistory = db.pointsHistory;
             const reviewPoint = await points.findPointByReviewId(data.reviewId, t);
 
             if (reviewPoint === null) {
                 throw new notFoundPointException();
             }
-
+            // 문제점 : 외부 객체의 값을 직접 비교
             const newHistory = pointsHistory.mapFrom(data, reviewPoint.point);
             await pointsHistory.addUserPointHistory(newHistory, t);
             await points.deletePoint(data, t);
