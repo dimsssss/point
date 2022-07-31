@@ -55,7 +55,7 @@ describe('points 통합테스트입니다.', () => {
         await addNewPointForWritingReview(db, oneFakeData);
         await addNewPointForWritingReview(db, secondFakeData);
         // 포인트 합산 결과 확인
-        const pointInformation = await getUserPoint(db, oneFakeData);
+        const pointInformation = await getUserPoint(db, oneFakeData.userId);
         expect(pointInformation.userId).toEqual(oneFakeData.userId);
         expect(pointInformation.totalPoint).toEqual('6')
     });

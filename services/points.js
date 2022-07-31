@@ -2,16 +2,16 @@ const {calculateReviewPoints, isFirstReview} = require('../domain/points');
 const {duplicatedPointException, notFoundPointException} = require('../exceptions/index');
 
 
-const getUserPoint = async (transaction, userId, points) => {
+const getUserPoint = async (db, userId) => {
     try {
-        return await transaction(async (t) => {
-            const userPoint = await points.findTotalPointByUserId(userId, t);
+        return await db.sequelize.transaction(async (t) => {
+            const userPoint = await db.points.findTotalPointByUserId(userId, t);
 
             if (userPoint === null) {
                 throw new notFoundPointException();
             }
             
-            userPoint.init(userId)
+            db.points.init(userPoint, userId)
             
             return userPoint;
         });

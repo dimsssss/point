@@ -12,11 +12,9 @@ const lookUpPoint = async (req, res) => {
     }
 
     try {
-        const points = req.app.get('db').points
+        const db = req.app.get('db')
         const userId = req.params.userId
-        const transaction = req.app.get('db').sequelize.transaction
-        
-        const result = await getUserPoint(transaction, userId, points);
+        const result = await getUserPoint(db, userId);
         
         return res.status(StatusCodes.OK).send(result);
     } catch (e) {
